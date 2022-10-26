@@ -8,7 +8,7 @@ class SongsController < ApplicationController
   def show
     song = Song.find_by(id: params[:id])
     if song 
-      render json: song
+      render json: song, status: :ok
     else
       render json: { error: "Song not found" }, status: :not_found
     end

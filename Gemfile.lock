@@ -102,6 +102,7 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jsonapi-renderer (0.2.2)
+    jwt (2.5.0)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -205,6 +206,7 @@ DEPENDENCIES
   byebug
   capybara
   jbuilder
+  jwt
   puma (~> 5.0)
   rails (~> 7.0.4)
   selenium-webdriver

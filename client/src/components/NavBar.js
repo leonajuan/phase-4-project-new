@@ -8,10 +8,10 @@ function NavBar() {
           <Link to="/">Home</Link>
         </li>
         <li className="nav-list-item">
-          <Link to="/login">Login</Link>
+          <Link to="/songs">Songs</Link>
         </li>
         <li className="nav-list-item">
-          <Link to="/users">Users</Link>
+          <Link to="/signup">Signup</Link>
         </li>
       </ul>
     </nav>

@@ -6,6 +6,7 @@ import Header from './components/Header'
 import NavBar from './components/NavBar'
 import LoginForm from './components/LoginForm'
 import UsersList from './components/UsersList'
+import SignUpForm from './components/SignUpForm'
 
 function App() {
   const [songs, setSongs] = useState([])
@@ -34,14 +35,17 @@ function App() {
         <div className="App">
           <NavBar />
           <Switch>
-            <Route path="/login">
-              <LoginForm />
+            <Route path="/songs">
+              <SongsList songs={songs} />
             </Route>
             <Route path="/users">
               <UsersList users={users} />
             </Route>
             <Route path="/">
-              <SongsList songs={songs} />
+              <LoginForm />
+            </Route>
+            <Route path="/signup">
+              <SignUpForm />
             </Route>
           </Switch>
         </div>
