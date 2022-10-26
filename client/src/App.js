@@ -1,28 +1,52 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import SongsList from './components/SongsList'
+import './App.css'
+import Header from './components/Header'
+import NavBar from './components/NavBar'
+import LoginForm from './components/LoginForm'
+import UsersList from './components/UsersList'
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [songs, setSongs] = useState([])
+  const [users, setUsers] = useState([])
 
   useEffect(() => {
-    fetch("/hello")
-      .then((r) => r.json())
-      .then((data) => setCount(data.count));
-  }, []);
+    fetch('/songs')
+      .then(res => res.json())
+      .then(songsData => {
+        setSongs(songsData)
+      })
+  }, [])
+
+  useEffect(() => {
+    fetch('/users')
+      .then(res => res.json())
+      .then(usersData => {
+        setUsers(usersData)
+      })
+  }, [])
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Switch>
-          <Route path="/testing">
-            <h1>Test Route</h1>
-          </Route>
-          <Route path="/">
-            <h1>Page Count: {count}</h1>
-          </Route>
-        </Switch>
-      </div>
-    </BrowserRouter>
+    <>
+      <Header />
+      <BrowserRouter>
+        <div className="App">
+          <NavBar />
+          <Switch>
+            <Route path="/login">
+              <LoginForm />
+            </Route>
+            <Route path="/users">
+              <UsersList users={users} />
+            </Route>
+            <Route path="/">
+              <SongsList songs={songs} />
+            </Route>
+          </Switch>
+        </div>
+      </BrowserRouter>
+    </>
   );
 }
 

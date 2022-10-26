@@ -1,5 +1,15 @@
 class UsersController < ApplicationController
 
+  def login
+    user = User.find_by(email: params[:email]).try(:authenticate, params[:password])
+    if user
+      token = generate_token(user.id)
+      render json: { user: user, token: token }
+    else
+      render json: { error: "Invalid Password" }, status: :unauthorized
+    end
+  end
+
   def index
     users = User.all 
     render json: users, status: :ok
@@ -52,5 +62,5 @@ class UsersController < ApplicationController
   def user_params
     params.permit(:name, :email, :password, :image)
   end
-  
+
 end
