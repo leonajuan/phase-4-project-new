@@ -10,7 +10,8 @@ import SignUpForm from './components/SignUpForm'
 
 function App() {
   const [songs, setSongs] = useState([])
-  const [users, setUsers] = useState([])
+  const [userProfiles, setUserProfiles] = useState([])
+  const [user, setUser] = useState([])
 
   useEffect(() => {
     fetch('/songs')
@@ -24,9 +25,30 @@ function App() {
     fetch('/users')
       .then(res => res.json())
       .then(usersData => {
-        setUsers(usersData)
+        setUserProfiles(usersData)
       })
   }, [])
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    const email = e.target["email"].value
+    const password = e.target["password"].value
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    })
+      .then(res => res.json())
+      .then(userLogin =>
+        setUser(userLogin))
+  }
+
 
   return (
     <>
@@ -39,10 +61,10 @@ function App() {
               <SongsList songs={songs} />
             </Route>
             <Route path="/users">
-              <UsersList users={users} />
+              <UsersList userProfiles={userProfiles} />
             </Route>
             <Route path="/">
-              <LoginForm />
+              <LoginForm handleSubmit={handleSubmit} />
             </Route>
             <Route path="/signup">
               <SignUpForm />

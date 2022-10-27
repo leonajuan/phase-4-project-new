@@ -1,9 +1,9 @@
 import User from '../components/User'
 
-function UsersList({ users }) {
+function UsersList({ userProfiles }) {
 
-  const usersComponents = users.map(user => {
-    return <User key={user.id} user={user} />
+  const usersComponents = userProfiles.map(userProfile => {
+    return <User key={userProfile.id} userProfile={userProfile} />
   })
 
   return (
