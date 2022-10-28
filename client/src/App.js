@@ -11,7 +11,8 @@ import SignUpForm from './components/SignUpForm'
 function App() {
   const [songs, setSongs] = useState([])
   const [userProfiles, setUserProfiles] = useState([])
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState(null)
+  const [filteredUsers, setFilteredUsers] = useState([])
 
   useEffect(() => {
     fetch('/songs')
@@ -26,9 +27,26 @@ function App() {
       .then(res => res.json())
       .then(usersData => {
         setUserProfiles(usersData)
+        setFilteredUsers(usersData)
       })
   }, [])
-
+  useEffect(() => {
+    let token = localStorage.getItem("token")
+    if (token) {
+      fetch('/profile', {
+        headers: {
+          'token': token,
+          'Content-Type': 'application/json',
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          // console.log("already logged in", data)
+          setUser(data)
+          // HERE
+        })
+    }
+  }, [])
   function handleSubmit(e) {
     e.preventDefault()
     const email = e.target["email"].value
@@ -45,14 +63,35 @@ function App() {
       })
     })
       .then(res => res.json())
-      .then(userLogin =>
-        setUser(userLogin))
+      .then(data => {
+        setUser(data.user)
+        localStorage.setItem("token", data.token)
+        // HERE
+      })
   }
 
+  function handleAddUser(newUser) {
+    const updatedUsersArray = [...userProfiles, newUser]
+    setFilteredUsers(updatedUsersArray)
+  }
+
+  // function addNewUser(e) {
+  //   e.preventDefault()
+  //   fetch('/users', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //       id: User
+  //     })
+  //   })
+  // }
 
   return (
     <>
       <Header />
+      <SignUpForm handleAddUser={handleAddUser} userProfiles={filteredUsers} />
       <BrowserRouter>
         <div className="App">
           <NavBar />
@@ -61,14 +100,14 @@ function App() {
               <SongsList songs={songs} />
             </Route>
             <Route path="/users">
-              <UsersList userProfiles={userProfiles} />
+              <UsersList userProfiles={filteredUsers} />
             </Route>
             <Route path="/">
               <LoginForm handleSubmit={handleSubmit} />
             </Route>
-            <Route path="/signup">
-              <SignUpForm />
-            </Route>
+            {/* <Route path="/signup">
+              <SignUpForm userProfiles={userProfiles} />
+            </Route> */}
           </Switch>
         </div>
       </BrowserRouter>

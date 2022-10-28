@@ -14,7 +14,16 @@ class UsersController < ApplicationController
     users = User.all 
     render json: users, status: :ok
   end
-
+  def profile
+    token = request.headers["token"]
+    user_id = decode_token(token)
+    user = User.find(user_id)
+    if user
+      render json: user, status: :ok
+    else
+      render json: { error: "User not found" }, status: :not_found
+    end
+  end
   def show
     user = User.find_by(id: params[:id])
     if user

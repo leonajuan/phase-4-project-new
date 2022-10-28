@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   # constraints: ->(req) { !req.xhr? && req.format.html? }
 
   post '/login', to: 'users#login'
+  get '/profile', to: 'users#profile'
 
 end
