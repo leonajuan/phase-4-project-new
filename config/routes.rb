@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   post '/login', to: 'users#login'
   get '/profile', to: 'users#profile'
   patch '/user-name', to: 'users#update_name'
-  delete '/logout', to: 'users#logout'
-  
+
+  delete '/users', to: 'users#destroy'
 end

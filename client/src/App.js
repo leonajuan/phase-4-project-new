@@ -111,6 +111,23 @@ function App() {
     window.location.reload()
   }
 
+  function deleteUser() {
+    let token = localStorage.getItem('token')
+    if (token) {
+      fetch('/users', {
+        method: 'DELETE',
+        headers: {
+          'token': token,
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(res => res.json())
+        .then(deletedUser => {
+          console.log(deletedUser)
+        })
+    }
+  }
+
   return (
     <>
       <Header />
@@ -123,7 +140,7 @@ function App() {
               <SongsList songs={songs} />
             </Route>
             <Route path="/users">
-              <Profile user={user} setUser={setUser} handleLogOut={handleLogOut} songs={songs} />
+              <Profile user={user} setUser={setUser} handleLogOut={handleLogOut} songs={songs} deleteUser={deleteUser} />
               {/* <UsersList userProfiles={filteredUsers} /> */}
             </Route>
             <Route path="/">

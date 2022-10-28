@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2'
 // import Comments from './Comments'
 
-function Profile({ user, setUser, handleLogOut, songs }) {
+function Profile({ user, setUser, handleLogOut, deleteUser }) {
 
   function editName() {
     let token = localStorage.getItem('token')
@@ -45,7 +45,9 @@ function Profile({ user, setUser, handleLogOut, songs }) {
       <br />
       <br />
       <button onClick={handleLogOut}>Log Out</button>
-      <h2>My Favorite Songs</h2>
+      <br />
+      <button onClick={deleteUser}>Delete Account</button>
+      {/* <h2>My Favorite Songs</h2> */}
     </div>
   )
 }

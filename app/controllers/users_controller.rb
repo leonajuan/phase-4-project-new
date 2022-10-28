@@ -60,27 +60,29 @@ class UsersController < ApplicationController
     end
   end
 
-  def logout
+  # def logout
+  #   token = request.headers["token"]
+  #   user_id = decode_token(token)
+  #   user = User.find(user_id)
+  #   if user
+  #     user_id.destroy
+  #     render json: { message: "User logged out" }, status: :no_content
+  #   else
+  #     render json: { error: "User not found" }, status: :not_found
+  #   end
+  # end  
+
+  def destroy
     token = request.headers["token"]
     user_id = decode_token(token)
     user = User.find(user_id)
     if user
-      user_id.destroy
-      render json: { message: "User logged out" }, status: :no_content
+      user.destroy
+      render json: {}, status: :no_content
     else
       render json: { error: "User not found" }, status: :not_found
     end
-  end  
-
-  # def destroy
-  #   user = User.find_by(id: params[:id])
-  #   if user
-  #     user.destroy
-  #     render json: {}, status: :no_content
-  #   else
-  #     render json: { error: "User not found" }, status: :not_found
-  #   end
-  # end
+  end
 
   private
 
