@@ -41,7 +41,7 @@ function Profile({ user }) {
         'aria-label': 'Type your full name here'
       },
       preConfirm: (text) => {
-        fetch(`/reviews/${userId}`, {
+        fetch(`/users/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json'
