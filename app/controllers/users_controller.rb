@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   def profile
     token = request.headers["token"]
     user_id = decode_token(token)
-    user = User.find(user_id)
+    user = User.find_by(id: user_id)
     if user
       render json: user, status: :ok
     else
@@ -43,11 +43,12 @@ class UsersController < ApplicationController
       render json: { errors: user.errors }, status: :unprocessable_entity
     end
   end
-
-  def update
-    user = User.find_by(id: params[:id])
+  def update_name
+    token = request.headers["token"]
+    user_id = decode_token(token)
+    user = User.find(user_id)
     if user
-      user.update(user_params)
+      user.update(name: params[:name])
       if user.valid?
         render json: user, status: :ok
       else

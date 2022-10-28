@@ -12,9 +12,8 @@ import Profile from './components/Profile'
 function App() {
   const [songs, setSongs] = useState([])
   const [userProfiles, setUserProfiles] = useState([])
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState({})
   const [filteredUsers, setFilteredUsers] = useState([])
-
   useEffect(() => {
     fetch('/songs')
       .then(res => res.json())
@@ -78,18 +77,19 @@ function App() {
     setFilteredUsers(updatedUsersArray)
   }
 
-  // function addNewUser(e) {
-  //   e.preventDefault()
-  //   fetch('/users', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //       id: User
-  //     })
-  //   })
-  // }
+  function handleLogOut() {
+    let token = localStorage.getItem("token")
+    if (token) {
+      fetch("/profile", {
+        method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+        .then(res => res.json())
+        .then(loggedOutUser => console.log(loggedOutUser))
+    }
+  }
 
   return (
     <>
@@ -103,7 +103,7 @@ function App() {
               <SongsList songs={songs} />
             </Route>
             <Route path="/users">
-              <Profile user={user} />
+              <Profile user={user} setUser={setUser} handleLogOut={handleLogOut} songs={songs} />
               {/* <UsersList userProfiles={filteredUsers} /> */}
             </Route>
             <Route path="/">

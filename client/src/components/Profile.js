@@ -1,38 +1,10 @@
 import Swal from 'sweetalert2'
+// import Comments from './Comments'
 
-function Profile({ user }) {
+function Profile({ user, setUser, handleLogOut, songs }) {
 
-  // function handleUserUpdate(userId) {
-  //   const { value: text } = Swal.fire({
-  //     input: 'textarea',
-  //     inputLabel: `Edit Name`,
-  //     inputPlaceholder: 'Edit your full name here...',
-  //     inputAttributes: {
-  //       'aria-label': 'Type your full name here'
-  //     },
-  //     preConfirm: (text) => {
-  //       fetch(`/users/${userId}`, {
-  //         method: 'PATCH',
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         },
-  //         body: JSON.stringify({
-  //           user_id: user.id,
-  //           name: text
-  //         }),
-  //       })
-  //         .then(res => res.json())
-  //         .then(updatedName => {
-  //           console.log(updatedName)
-  //         })
-  //     },
-  //     showCancelButton: true
-  //   })
-  //   if (text) {
-  //     Swal.fire(text)
-  //   }
-
-  function editName(userId) {
+  function editName() {
+    let token = localStorage.getItem('token')
     const { value: text } = Swal.fire({
       input: 'textarea',
       inputLabel: `Edit Name`,
@@ -41,9 +13,10 @@ function Profile({ user }) {
         'aria-label': 'Type your full name here'
       },
       preConfirm: (text) => {
-        fetch(`/users/${userId}`, {
+        fetch(`/user-name`, {
           method: 'PATCH',
           headers: {
+            'token': token,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -52,8 +25,8 @@ function Profile({ user }) {
           }),
         })
           .then(res => res.json())
-          .then(updatedName => {
-            console.log(updatedName)
+          .then(updatedUser => {
+            setUser(updatedUser)
           })
       },
       showCancelButton: true
@@ -65,11 +38,14 @@ function Profile({ user }) {
 
   return (
     <div>
-      <h1>MY PROFILE</h1>
-      <h1>{user.name}</h1>
+      <h1>Hello, {user.name}!</h1>
       <img src={user.image} alt={user.name} />
       <br />
       <button onClick={editName}>Update Name</button>
+      <br />
+      <br />
+      <button onClick={handleLogOut}>Log Out</button>
+      <h2>My Favorite Songs</h2>
     </div>
   )
 }

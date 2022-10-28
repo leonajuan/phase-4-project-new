@@ -5,6 +5,7 @@ function SignUpForm({ userProfiles, addNewUser }) {
     const name = e.target["name"].value
     const email = e.target["email"].value
     const password = e.target["password"].value
+    const image = e.target["image"].value
     fetch("/users", {
       method: "POST",
       headers: {
@@ -14,7 +15,8 @@ function SignUpForm({ userProfiles, addNewUser }) {
         id: userProfiles.length + 1,
         name: name,
         email: email,
-        password: password
+        password: password,
+        image: image
       }),
     })
       .then(res => res.json())
@@ -28,6 +30,7 @@ function SignUpForm({ userProfiles, addNewUser }) {
         <input type="text" name="name" placeholder="Full Name" />
         <input type="text" name="email" placeholder="Email" />
         <input type="text" name="password" placeholder="Password" />
+        <input type="text" name="image" placeholder="Image URL" />
         <button type="submit">Sign Up</button>
       </form>
     </div>
