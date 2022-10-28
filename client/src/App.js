@@ -7,11 +7,12 @@ import NavBar from './components/NavBar'
 import LoginForm from './components/LoginForm'
 import UsersList from './components/UsersList'
 import SignUpForm from './components/SignUpForm'
+import Profile from './components/Profile'
 
 function App() {
   const [songs, setSongs] = useState([])
   const [userProfiles, setUserProfiles] = useState([])
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState([])
   const [filteredUsers, setFilteredUsers] = useState([])
 
   useEffect(() => {
@@ -102,11 +103,15 @@ function App() {
               <SongsList songs={songs} />
             </Route>
             <Route path="/users">
-              <UsersList userProfiles={filteredUsers} />
+              <Profile user={user} />
+              {/* <UsersList userProfiles={filteredUsers} /> */}
             </Route>
             <Route path="/">
               <LoginForm handleSubmit={handleSubmit} />
             </Route>
+            {/* <Route path="/profile">
+              <Profile user={user} />
+            </Route> */}
             {/* <Route path="/signup">
               <SignUpForm userProfiles={userProfiles} />
             </Route> */}

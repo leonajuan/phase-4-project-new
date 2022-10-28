@@ -11,6 +11,7 @@ function Songs({ song, comments }) {
       <img src={song.album_cover} alt={song.album} onClick={() => setShowComments(!showComments)} />
       <h3>{song.artist}</h3>
       <h3>{song.album}</h3>
+      <button>Add A Comment</button>
       {showComments ? <CommentsList comments={comments} id={song.id} /> : null}
     </li>
   )

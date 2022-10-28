@@ -10,6 +10,9 @@ function NavBar() {
         <li className="nav-list-item">
           <Link to="/songs">Songs</Link>
         </li>
+        <li className="nav-list-item">
+          <Link to="/users">Users</Link>
+        </li>
         {/* <li className="nav-list-item">
           <Link to="/signup">Signup</Link>
         </li> */}
