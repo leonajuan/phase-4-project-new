@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     users = User.all 
     render json: users, status: :ok
   end
+
   def profile
     token = request.headers["token"]
     user_id = decode_token(token)
@@ -24,14 +25,15 @@ class UsersController < ApplicationController
       render json: { error: "User not found" }, status: :not_found
     end
   end
-  def show
-    user = User.find_by(id: params[:id])
-    if user
-      render json: user, status: :ok
-    else
-      render json: { error: "User not found" }, status: :not_found
-    end
-  end
+
+  # def show
+  #   user = User.find_by(id: params[:id])
+  #   if user
+  #     render json: user, status: :ok
+  #   else
+  #     render json: { error: "User not found" }, status: :not_found
+  #   end
+  # end
 
   def create
     user = User.create(user_params)

@@ -30,6 +30,7 @@ function App() {
         setFilteredUsers(usersData)
       })
   }, [])
+
   useEffect(() => {
     let token = localStorage.getItem("token")
     if (token) {
@@ -47,6 +48,7 @@ function App() {
         })
     }
   }, [])
+
   function handleSubmit(e) {
     e.preventDefault()
     const email = e.target["email"].value
@@ -70,7 +72,7 @@ function App() {
       })
   }
 
-  function handleAddUser(newUser) {
+  function addNewUser(newUser) {
     const updatedUsersArray = [...userProfiles, newUser]
     setFilteredUsers(updatedUsersArray)
   }
@@ -91,7 +93,7 @@ function App() {
   return (
     <>
       <Header />
-      <SignUpForm handleAddUser={handleAddUser} userProfiles={filteredUsers} />
+      <SignUpForm addNewUser={addNewUser} userProfiles={filteredUsers} />
       <BrowserRouter>
         <div className="App">
           <NavBar />
