@@ -77,18 +77,38 @@ function App() {
     setFilteredUsers(updatedUsersArray)
   }
 
+  // function handleLogOut() {
+  //   let token = localStorage.getItem("token")
+  //   if (token) {
+  //     fetch("/logout", {
+  //       method: 'DELETE',
+  //       headers: {
+  //         "token": token,
+  //         "Content-Type": "application/json"
+  //       }
+  //         .then(res => res.json())
+  //         .then(loggedOutUser => console.log("you are logged out", loggedOutUser))
+  //     })
+  //   }
+  // }
+
   function handleLogOut() {
-    let token = localStorage.getItem("token")
-    if (token) {
-      fetch("/profile", {
-        method: 'DELETE',
-        headers: {
-          "Content-Type": "application/json"
-        },
-      })
-        .then(res => res.json())
-        .then(loggedOutUser => console.log(loggedOutUser))
-    }
+    // let token = localStorage.getItem('token')
+    // if (token) {
+    //   fetch('/logout', {
+    //     method: 'DELETE',
+    //     headers: {
+    //       'token': token,
+    //       'Content-Type': 'application/json'
+    //     },
+    //   })
+    //     .then(res => res.json())
+    //     .then(loggedOutUser => {
+    //       console.log("you logged out", loggedOutUser)
+    //     })
+    // }
+    localStorage.removeItem('token')
+    window.location.reload()
   }
 
   return (

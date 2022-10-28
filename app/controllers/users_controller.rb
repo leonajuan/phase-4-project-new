@@ -43,6 +43,7 @@ class UsersController < ApplicationController
       render json: { errors: user.errors }, status: :unprocessable_entity
     end
   end
+  
   def update_name
     token = request.headers["token"]
     user_id = decode_token(token)
@@ -59,15 +60,27 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    user = User.find_by(id: params[:id])
+  def logout
+    token = request.headers["token"]
+    user_id = decode_token(token)
+    user = User.find(user_id)
     if user
-      user.destroy
-      render json: {}, status: :no_content
+      user_id.destroy
+      render json: { message: "User logged out" }, status: :no_content
     else
       render json: { error: "User not found" }, status: :not_found
     end
-  end
+  end  
+
+  # def destroy
+  #   user = User.find_by(id: params[:id])
+  #   if user
+  #     user.destroy
+  #     render json: {}, status: :no_content
+  #   else
+  #     render json: { error: "User not found" }, status: :not_found
+  #   end
+  # end
 
   private
 
