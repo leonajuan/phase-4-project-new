@@ -114,17 +114,17 @@ function App() {
   function deleteUser() {
     let token = localStorage.getItem('token')
     if (token) {
-      fetch('/users', {
+      fetch('/profile', {
         method: 'DELETE',
         headers: {
           'token': token,
           'Content-Type': 'application/json'
         },
       })
-        .then(res => res.json())
-        .then(deletedUser => {
-          console.log(deletedUser)
-        })
+      // .then(res => res.json())
+      // .then(deletedUser => {
+      //   console.log(deletedUser)
+      // })
     }
   }
 
