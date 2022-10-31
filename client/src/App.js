@@ -5,8 +5,8 @@ import './App.css'
 import Header from './components/Header'
 import NavBar from './components/NavBar'
 import LoginForm from './components/LoginForm'
-import UsersList from './components/UsersList'
-import SignUpForm from './components/SignUpForm'
+// import UsersList from './components/UsersList'
+// import SignUpForm from './components/SignUpForm'
 import Profile from './components/Profile'
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
   const [userProfiles, setUserProfiles] = useState([])
   const [user, setUser] = useState({})
   const [filteredUsers, setFilteredUsers] = useState([])
+
   useEffect(() => {
     fetch('/songs')
       .then(res => res.json())
@@ -72,41 +73,36 @@ function App() {
       })
   }
 
+  function handleNewUser(e) {
+    e.preventDefault()
+    const name = e.target["name"].value
+    const email = e.target["email"].value
+    const password = e.target["password"].value
+    const image = e.target["image"].value
+    fetch("/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: userProfiles.length + 1,
+        name: name,
+        email: email,
+        password: password,
+        image: image
+      }),
+    })
+      .then(res => res.json())
+      .then(newUser => addNewUser(newUser))
+  }
+
   function addNewUser(newUser) {
     const updatedUsersArray = [...userProfiles, newUser]
     setFilteredUsers(updatedUsersArray)
+    alert("Thank you for signing up!")
   }
 
-  // function handleLogOut() {
-  //   let token = localStorage.getItem("token")
-  //   if (token) {
-  //     fetch("/logout", {
-  //       method: 'DELETE',
-  //       headers: {
-  //         "token": token,
-  //         "Content-Type": "application/json"
-  //       }
-  //         .then(res => res.json())
-  //         .then(loggedOutUser => console.log("you are logged out", loggedOutUser))
-  //     })
-  //   }
-  // }
-
   function handleLogOut() {
-    // let token = localStorage.getItem('token')
-    // if (token) {
-    //   fetch('/logout', {
-    //     method: 'DELETE',
-    //     headers: {
-    //       'token': token,
-    //       'Content-Type': 'application/json'
-    //     },
-    //   })
-    //     .then(res => res.json())
-    //     .then(loggedOutUser => {
-    //       console.log("you logged out", loggedOutUser)
-    //     })
-    // }
     localStorage.removeItem('token')
     window.location.reload()
   }
@@ -131,7 +127,7 @@ function App() {
   return (
     <>
       <Header />
-      <SignUpForm addNewUser={addNewUser} userProfiles={filteredUsers} />
+      {/* <SignUpForm addNewUser={addNewUser} userProfiles={filteredUsers} /> */}
       <BrowserRouter>
         <div className="App">
           <NavBar />
@@ -144,7 +140,7 @@ function App() {
               {/* <UsersList userProfiles={filteredUsers} /> */}
             </Route>
             <Route path="/">
-              <LoginForm handleSubmit={handleSubmit} />
+              <LoginForm handleSubmit={handleSubmit} handleNewUser={handleNewUser} addNewUser={addNewUser} userProfiles={userProfiles} />
             </Route>
             {/* <Route path="/profile">
               <Profile user={user} />
