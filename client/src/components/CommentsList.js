@@ -8,6 +8,7 @@ function CommentsList({ comments, id }) {
 
   return (
     <div>
+      <h2 className="comments">Comments</h2>
       {commentsComponents}
     </div>
   )

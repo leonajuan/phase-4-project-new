@@ -2,7 +2,7 @@ function Comments({ comment }) {
 
   return (
     <>
-      <p>{comment.comment} <button>Update Comment</button> <button>X</button> </p>
+      <p className="comment">{comment.user.name} says: {comment.comment}</p>
     </>
   )
 }
