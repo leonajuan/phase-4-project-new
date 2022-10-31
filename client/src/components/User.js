@@ -1,8 +1,8 @@
 function User({ userProfile }) {
   return (
-    <li className="cards">
-      <h2>{userProfile.name}</h2>
-      <img src={userProfile.image} alt={userProfile.name} />
+    <li className="user-cards">
+      <h2 className="user-name">{userProfile.name}</h2>
+      <img className="user-photos" src={userProfile.image} alt={userProfile.name} />
     </li>
   )
 }

@@ -9,17 +9,20 @@ import LoginForm from './components/LoginForm'
 // import SignUpForm from './components/SignUpForm'
 import Profile from './components/Profile'
 
+
 function App() {
   const [songs, setSongs] = useState([])
   const [userProfiles, setUserProfiles] = useState([])
   const [user, setUser] = useState({})
   const [filteredUsers, setFilteredUsers] = useState([])
+  const [filteredSongs, setFilteredSongs] = useState([])
 
   useEffect(() => {
     fetch('/songs')
       .then(res => res.json())
       .then(songsData => {
         setSongs(songsData)
+        setFilteredSongs(songsData)
       })
   }, [])
 
@@ -69,7 +72,7 @@ function App() {
       .then(data => {
         setUser(data.user)
         localStorage.setItem("token", data.token)
-        // HERE
+        alert("You're logged in!")
       })
   }
 
@@ -100,6 +103,35 @@ function App() {
     const updatedUsersArray = [...userProfiles, newUser]
     setFilteredUsers(updatedUsersArray)
     alert("Thank you for signing up!")
+  }
+
+  function handleNewSong(e) {
+    e.preventDefault()
+    const title = e.target["title"].value
+    const artist = e.target["artist"].value
+    const album = e.target["album"].value
+    const album_cover = e.target["album_cover"].value
+    fetch('/songs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: songs.length + 1,
+        title: title,
+        artist: artist,
+        album: album,
+        album_cover: album_cover
+      }),
+    })
+      .then(res => res.json())
+      .then(newSong => addNewSong(newSong))
+  }
+
+  function addNewSong(newSong) {
+    const updatedSongsArray = [...songs, newSong]
+    setFilteredSongs(updatedSongsArray)
+    alert("Song submitted.")
   }
 
   function handleLogOut() {
@@ -133,10 +165,10 @@ function App() {
           <NavBar />
           <Switch>
             <Route path="/songs">
-              <SongsList songs={songs} />
+              <SongsList songs={filteredSongs} user={user} handleNewSong={handleNewSong} />
             </Route>
             <Route path="/users">
-              <Profile user={user} setUser={setUser} handleLogOut={handleLogOut} songs={songs} deleteUser={deleteUser} />
+              <Profile user={user} setUser={setUser} handleLogOut={handleLogOut} songs={songs} deleteUser={deleteUser} userProfiles={userProfiles} />
               {/* <UsersList userProfiles={filteredUsers} /> */}
             </Route>
             <Route path="/">

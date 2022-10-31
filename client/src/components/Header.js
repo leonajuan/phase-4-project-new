@@ -1,6 +1,6 @@
 function Header() {
   return (
-    <h2>PROJECT TITLE TBD</h2>
+    <h1 className="header">SPOTIGRAM</h1>
   )
 }
 

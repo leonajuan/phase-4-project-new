@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import CommentsList from '../components/CommentsList'
 
-function Songs({ song, comments }) {
+function Songs({ song, comments, handleNewComment }) {
 
   const [showComments, setShowComments] = useState(false)
 
@@ -11,7 +11,7 @@ function Songs({ song, comments }) {
       <img src={song.album_cover} alt={song.album} onClick={() => setShowComments(!showComments)} />
       <h3 className="song-details">{song.artist}</h3>
       <h3 className="song-details">{song.album}</h3>
-      <button className="comment-button">Add A Comment</button>
+      <button className="comment-button" onClick={handleNewComment}>Add A Comment</button>
       {showComments ? <CommentsList comments={comments} id={song.id} /> : null}
     </li>
   )

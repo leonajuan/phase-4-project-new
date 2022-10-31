@@ -1,7 +1,8 @@
 import Swal from 'sweetalert2'
-// import Comments from './Comments'
+import { useState } from 'react'
+import UsersList from '../components/UsersList'
 
-function Profile({ user, setUser, handleLogOut, deleteUser }) {
+function Profile({ user, setUser, handleLogOut, deleteUser, userProfiles }) {
 
   function editName() {
     let token = localStorage.getItem('token')
@@ -37,18 +38,27 @@ function Profile({ user, setUser, handleLogOut, deleteUser }) {
   }
 
   return (
-    <div>
-      <h1>Hello, {user.name}!</h1>
-      <img src={user.image} alt={user.name} />
-      <br />
-      <button onClick={editName}>Update Name</button>
-      <br />
-      <br />
-      <button onClick={handleLogOut}>Log Out</button>
-      <br />
-      <button onClick={deleteUser}>Delete Account</button>
-      {/* <h2>My Favorite Songs</h2> */}
-    </div>
+    <>
+      <div>
+        <h1 className="profile-name">Hello, {user.name}!</h1>
+        <img className="profile-pic" src={user.image} alt={user.name} />
+        <br />
+        <button className="profile-buttons" id="update-button" onClick={editName}>Update Name</button>
+        <br />
+        <br />
+        <button className="profile-buttons" onClick={handleLogOut}>Log Out</button>
+        <br />
+        <button className="profile-buttons" onClick={deleteUser}>Delete Account</button>
+      </div>
+      <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <h2 className="all-users">All Users:</h2>
+        <UsersList userProfiles={userProfiles} />
+      </div>
+    </>
   )
 }
 
