@@ -142,12 +142,6 @@ function App() {
             <Route path="/">
               <LoginForm handleSubmit={handleSubmit} handleNewUser={handleNewUser} addNewUser={addNewUser} userProfiles={userProfiles} />
             </Route>
-            {/* <Route path="/profile">
-              <Profile user={user} />
-            </Route> */}
-            {/* <Route path="/signup">
-              <SignUpForm userProfiles={userProfiles} />
-            </Route> */}
           </Switch>
         </div>
       </BrowserRouter>
